@@ -1,4 +1,4 @@
-(defproject storyblok-clj "0.0.4"
+(defproject storyblok-clj "0.0.5"
   :description "Storyblok Client: A simple client for the storyblok api"
   :url "http://example.com/FIXME"
   :license {:name "Eclipse Public License"

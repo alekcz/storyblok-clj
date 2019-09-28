@@ -7,7 +7,6 @@
 
 (defn- process-marks [node]
   (let [marks (:marks node) original (dissoc node :marks)]
-    (println (or (nil? marks) (empty? marks)))
     (if (or (nil? marks) (empty? marks))
         original
         (process-marks
