@@ -5,7 +5,7 @@ A clojure library for working with [Storyblok](https://www.storyblok.com/)
 ## API
 There is currently only one method in the API.
 
-```
+```clojure
 (require '[storyblok-clj.core :as sb])
 
 (def rich-text-map (-> response-map :story :content :rich-text-field))
