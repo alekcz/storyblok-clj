@@ -33,6 +33,7 @@
         "link" [:a (:attrs node)]
         "italic" [:i]
         "bold" [:b]
+        "underline" [:u]
         "text" (:text node)
         :default ""))))
 
