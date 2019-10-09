@@ -3,7 +3,8 @@
     [clj-http.client :as client]
     [cheshire.core :as json]
     [clojure.string :as str]
-    [hiccup.core :as hiccup]))
+    [hiccup.core :as hiccup]
+    [markdown.core :as md]))
 
 (defn- process-marks [node]
   (let [marks (:marks node) original (dissoc node :marks)]
@@ -35,6 +36,7 @@
         "bold" [:b]
         "underline" [:u]
         "text" (:text node)
+        "styled" (:text node)
         :default ""))))
 
 (defn- process-content [node]
@@ -52,10 +54,12 @@
                     (process-content x)))))))
 
 (defn- extract-doc [richtext-map]
-  (println (:content richtext-map))
   (if (= "doc" (:type richtext-map))
       (:content richtext-map)
       nil))         
 
 (defn richtext->html [richtext-map]
-  (hiccup/html (process-content (extract-doc richtext-map))))
+  (let [document (extract-doc richtext-map)]
+    (if (nil? document)
+      (md/md-to-html-string richtext-map)
+      (hiccup/html (process-content document)))))
