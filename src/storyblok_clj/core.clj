@@ -37,7 +37,7 @@
         "underline" [:u]
         "text" (:text node)
         "styled" (:text node)
-        :default ""))))
+        ""))))
 
 (defn- process-content [node]
   (if (vector? node)

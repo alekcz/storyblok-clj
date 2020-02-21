@@ -12,6 +12,12 @@ There is currently only one method in the API.
 
 (sb/rich-text-to-html rich-text-map)
 
+;You can use this as yogthos/Selmer filter like so
+
+(require '[selmer.filters :as sf])
+
+(sf/add-filter! :richtext (fn [richtext] [:safe (sb/richtext->html richtext)]))
+
 ```
 
 ## License
