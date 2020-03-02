@@ -16,10 +16,19 @@
                 :attrs (:attrs mark)
                 :content [(assoc original :marks new-marks)]})))))
 
+
+(defn- parse-custom-properties [node prefix]
+  (let [clean-node (dissoc node :_editable :_uid :body :component)
+        keys (keys clean-node)]
+      (for [x keys]
+        [:div {:class (str prefix "__" (name x))} (x clean-node)])  ))
+
 (defn- make-node [raw-node]
   (let [node (process-marks raw-node)]
-    (let [node-type (str (:type node))]
+    ;(clojure.pprint/pprint node)
+    (let [node-type (str (or (:type node) (:component node)))]
       (case node-type
+        "doc" (or (for [x (-> node :content)] (make-node x)) (make-node (-> node :content)))
         "horizontal_rule" [:hr ]
         "blockquote" [:blockquote]
         "bullet_list" [:ul]
@@ -29,14 +38,17 @@
         "image" [:img (:attrs node)]
         "list_item" [:li]
         "ordered_list" [:ol] 
-        "paragraph" [:p]
+        "paragraph" [:p (for [x (-> node :content)] (make-node x))]
         "a" [:a (:attrs node)]
         "link" [:a (:attrs node)]
         "italic" [:i]
         "bold" [:b]
         "underline" [:u]
         "text" (:text node)
-        "styled" (:text node)
+        "styled" (or (for [x (-> node :content)] (make-node x)) (:text node))
+        "blok" (for [x (-> node :attrs :body)] [:div {:class (str "blok-" (:component x))} 
+                                                  (parse-custom-properties x (str "blok-" (:component x)))
+                                                  (make-node (:body x))])
         ""))))
 
 (defn- process-content [node]
@@ -63,3 +75,5 @@
     (if (nil? document)
       (md/md-to-html-string richtext-map)
       (hiccup/html (process-content document)))))
+      ;(identity (process-content document)))))
+     
