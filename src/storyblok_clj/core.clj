@@ -46,9 +46,7 @@
         "underline" [:u]
         "text" (:text node)
         "styled" (or (for [x (-> node :content)] (make-node x)) (:text node))
-        "blok" (for [x (-> node :attrs :body)] [:div {:class (str "blok-" (:component x))} 
-                                                  (parse-custom-properties x (str "blok-" (:component x)))
-                                                  (make-node (:body x))])
+        "blok" (for [x (-> node :attrs :body)] [(keyword (str "blok-" (:component x))) {:class "blok" :data (json/encode x)}])
         ""))))
 
 (defn- process-content [node]
@@ -75,5 +73,12 @@
     (if (nil? document)
       (md/md-to-html-string richtext-map)
       (hiccup/html (process-content document)))))
-      ;(identity (process-content document)))))
-     
+
+(defn richtext->hiccup [richtext-map]
+  (let [document (extract-doc richtext-map)]
+    (if (nil? document)
+      (md/md-to-html-string richtext-map)
+      (process-content document))))
+
+(defn hiccup->html [hiccup]
+  (hiccup/html hiccup))
