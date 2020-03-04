@@ -7,5 +7,5 @@
 (deftest a-test
   (testing "FIXME, I fail."
     (let [json-map(json/decode (slurp "destiny-fund.json") true)]
-      (pprint/pprint (sb/richtext->html (-> json-map :story :content :content)))
+      (pprint/pprint (sb/richtext->hiccup (-> json-map :story :content :content)))
       (is (= 1 1)))))

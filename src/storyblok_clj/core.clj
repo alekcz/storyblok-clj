@@ -38,7 +38,7 @@
         "image" [:img (:attrs node)]
         "list_item" [:li]
         "ordered_list" [:ol] 
-        "paragraph" [:p (for [x (-> node :content)] (make-node x))]
+        "paragraph" [:p]
         "a" [:a (:attrs node)]
         "link" [:a (:attrs node)]
         "italic" [:i]
@@ -46,7 +46,7 @@
         "underline" [:u]
         "text" (:text node)
         "styled" (or (for [x (-> node :content)] (make-node x)) (:text node))
-        "blok" (for [x (-> node :attrs :body)] [(keyword (str "blok-" (:component x))) {:class "blok" :data (json/encode x)}])
+        "blok" (for [x (-> node :attrs :body)] [(keyword (str "blok-" (:component x))) {:class "blok" :data (json/encode (dissoc x :_editable :_uid))}])
         ""))))
 
 (defn- process-content [node]

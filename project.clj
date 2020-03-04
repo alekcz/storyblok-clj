@@ -1,4 +1,4 @@
-(defproject alekcz/storyblok-clj "1.1.5"
+(defproject alekcz/storyblok-clj "1.2.0"
   :description "Storyblok Client: A simple client for the storyblok api"
   :url "https://github.com/alekcz/storyblok-clj"
   :license {:name "Eclipse Public License"
