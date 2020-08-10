@@ -10,7 +10,7 @@ There is currently only one method in the API.
 
 (def rich-text-map (-> response-map :story :content :rich-text-field))
 
-(sb/rich-text-to-html rich-text-map)
+(sb/richtext->html rich-text-map)
 
 ;You can use this as yogthos/Selmer filter like so
 
